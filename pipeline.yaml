@@ -6,7 +6,7 @@ spec:
   workspaces:
     - name: myworkspace
   tasks:
-    - name: fetch-repository
+    - name: git-clone
       taskRef:
         name: git-clone
       workspaces:
@@ -14,14 +14,14 @@ spec:
           workspace: myworkspace
       params:
         - name: url
-          value: https://github.com/chan43999/go-tekton-sample
+          value: https://github.com/prane12/tekton-buildah.git
         - name: deleteExisting
           value: "true"
     - name: build
       taskRef:
         name: buildah
       runAfter:
-        - fetch-repository
+        - git-clone
       params:
         - name: IMAGE
           value: docker.io/chan43999/my-tutorial
@@ -30,4 +30,3 @@ spec:
       workspaces:
         - name: source
           workspace: myworkspace
-
